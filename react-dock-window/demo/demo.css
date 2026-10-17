@@ -1,0 +1,150 @@
+/* Demo app chrome. The dock itself is themed through --rdw-* variables,
+   so the whole surface picks up the dark palette with a handful of overrides. */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #1e1e1e;
+  color: #cccccc;
+}
+
+.demo-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ------------------------------- toolbar -------------------------------- */
+
+.demo-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.demo-brand {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.demo-actions {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.demo-actions button {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #3c3c3c;
+  border-radius: 4px;
+  background: #2d2d30;
+  color: #cccccc;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.12s linear, border-color 0.12s linear;
+}
+
+.demo-actions button:hover {
+  background: #3e3e42;
+  border-color: #5a5a5e;
+}
+
+.demo-stats {
+  font-size: 0.72rem;
+  color: #858585;
+  white-space: nowrap;
+}
+
+/* --------------------------------- dock --------------------------------- */
+
+.demo-dock {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  /* Dark theme via the library's design tokens. */
+  --rdw-bg: #1e1e1e;
+  --rdw-surface: #252526;
+  --rdw-surface-2: #2d2d30;
+  --rdw-border: #3c3c3c;
+  --rdw-text: #cccccc;
+  --rdw-text-muted: #858585;
+  --rdw-accent: #0e639c;
+  --rdw-accent-soft: rgba(14, 99, 156, 0.35);
+  --rdw-danger: #a1260d;
+  --rdw-radius: 4px;
+  --rdw-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  background: #181818;
+}
+
+.demo-empty {
+  color: var(--rdw-text-muted);
+  font-size: 0.85rem;
+}
+
+/* --------------------------------- views -------------------------------- */
+
+.demo-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  margin: 0;
+  padding: 1rem;
+  border-left: 3px solid;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.demo-view p {
+  margin: 0;
+  max-width: 46ch;
+}
+
+.demo-view-badge {
+  align-self: flex-start;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  color: #1e1e1e;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.demo-view-meta {
+  color: var(--rdw-text-muted);
+  font-size: 0.72rem;
+}
+
+.demo-view-meta code {
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  background: var(--rdw-surface-2);
+}
+
+/* -------------------------------- status -------------------------------- */
+
+.demo-status {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.75rem;
+  background: #007acc;
+  color: #ffffff;
+  font-size: 0.72rem;
+}

@@ -1,0 +1,370 @@
+/* react-dock-window — themed entirely through CSS custom properties.
+   Override any --rdw-* value on a wrapper element to match your app. */
+
+.rdw-area {
+  --rdw-bg: #ffffff;
+  --rdw-surface: #f1f3f5;
+  --rdw-surface-2: #e6e9ed;
+  --rdw-border: #d3d8de;
+  --rdw-text: #1f252b;
+  --rdw-text-muted: #7b848d;
+  --rdw-accent: #3b82f6;
+  --rdw-accent-soft: rgba(59, 130, 246, 0.16);
+  --rdw-danger: #dc2626;
+  --rdw-radius: 6px;
+  --rdw-header-height: 40px;
+  --rdw-divider-width: 6px;
+  --rdw-shadow: 0 12px 32px rgba(15, 23, 42, 0.24);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rdw-bg);
+  color: var(--rdw-text);
+  font-size: 0.85rem;
+}
+
+.rdw-area *,
+.rdw-area *::before,
+.rdw-area *::after {
+  box-sizing: border-box;
+}
+
+.rdw-dock {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rdw-empty {
+  display: grid;
+  flex: 1 1 auto;
+  place-items: center;
+  color: var(--rdw-text-muted);
+}
+
+/* ------------------------------- splits --------------------------------- */
+
+.rdw-split {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rdw-cell {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rdw-divider {
+  flex: 0 0 var(--rdw-divider-width);
+  background: var(--rdw-surface);
+  cursor: col-resize;
+  transition: background 0.12s linear;
+}
+
+.rdw-divider[data-direction="column"] {
+  cursor: row-resize;
+}
+
+.rdw-divider:hover,
+.rdw-divider:focus-visible {
+  background: var(--rdw-accent);
+  outline: none;
+}
+
+/* While a drag is in flight every group shows where it could land. */
+.rdw-area.is-dragging .rdw-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--rdw-border);
+  pointer-events: none;
+}
+
+/* ------------------------------- windows -------------------------------- */
+
+.rdw-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rdw-bg);
+  border: 1px solid var(--rdw-border);
+  border-radius: var(--rdw-radius);
+}
+
+.rdw-window--docked {
+  inset: 0;
+}
+
+.rdw-window--docked.is-maximized {
+  z-index: 30;
+}
+
+.rdw-window.is-dragging {
+  position: fixed;
+  inset: auto;
+  z-index: 100;
+  cursor: grabbing;
+  box-shadow: var(--rdw-shadow);
+}
+
+.rdw-window.is-snap-preview {
+  border-color: var(--rdw-accent);
+  box-shadow: 0 0 0 2px var(--rdw-accent-soft);
+}
+
+.rdw-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.rdw-layer .rdw-window {
+  pointer-events: auto;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+}
+
+/* ------------------------------ title bar ------------------------------- */
+
+.rdw-header {
+  display: flex;
+  flex: 0 0 var(--rdw-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: var(--rdw-surface);
+  border-bottom: 1px solid var(--rdw-border);
+  cursor: grab;
+  user-select: none;
+}
+
+.rdw-header:active {
+  cursor: grabbing;
+}
+
+.rdw-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 0.6rem;
+  overflow: hidden;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rdw-controls {
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+.rdw-control {
+  display: grid;
+  place-items: center;
+  width: var(--rdw-header-height);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--rdw-text);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.12s linear, color 0.12s linear;
+}
+
+.rdw-control:hover {
+  background: var(--rdw-surface-2);
+}
+
+.rdw-control--close:hover {
+  background: var(--rdw-danger);
+  color: #fff;
+}
+
+/* -------------------------------- tabs ---------------------------------- */
+
+.rdw-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  overflow-x: auto;
+  background: var(--rdw-bg);
+  border-bottom: 1px solid var(--rdw-border);
+  scrollbar-width: thin;
+}
+
+.rdw-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 13rem;
+  padding: 0.3rem 0.5rem;
+  border-right: 1px solid var(--rdw-border);
+  font-size: 0.75rem;
+  color: var(--rdw-text-muted);
+  cursor: grab;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.rdw-tab.is-active {
+  background: var(--rdw-surface);
+  color: var(--rdw-text);
+  box-shadow: inset 0 -2px 0 var(--rdw-accent);
+}
+
+.rdw-tab-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.rdw-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rdw-tab-close {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.rdw-tab-close:hover {
+  background: var(--rdw-surface-2);
+  color: var(--rdw-danger);
+}
+
+/* -------------------------------- body ---------------------------------- */
+
+.rdw-body {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* ---------------------------- resize handles ---------------------------- */
+
+.rdw-resize {
+  position: absolute;
+  z-index: 5;
+  background: transparent;
+}
+
+.rdw-resize:hover {
+  background: var(--rdw-accent-soft);
+}
+
+.rdw-resize--left,
+.rdw-resize--right {
+  top: 0;
+  bottom: 0;
+  width: 6px;
+}
+
+.rdw-resize--left {
+  left: 0;
+  cursor: ew-resize;
+}
+
+.rdw-resize--right {
+  right: 0;
+  cursor: ew-resize;
+}
+
+.rdw-resize--top,
+.rdw-resize--bottom {
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+.rdw-resize--top {
+  top: 0;
+  cursor: ns-resize;
+}
+
+.rdw-resize--bottom {
+  bottom: 0;
+  cursor: ns-resize;
+}
+
+.rdw-resize--top-left,
+.rdw-resize--top-right,
+.rdw-resize--bottom-left,
+.rdw-resize--bottom-right {
+  width: 12px;
+  height: 12px;
+}
+
+.rdw-resize--top-left {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.rdw-resize--top-right {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+
+.rdw-resize--bottom-left {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
+
+.rdw-resize--bottom-right {
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+}
+
+/* --------------------------- drop preview ------------------------------- */
+
+.rdw-overlay {
+  position: fixed;
+  display: none;
+  pointer-events: none;
+  z-index: 60;
+  background: var(--rdw-accent-soft);
+  border: 2px solid var(--rdw-accent);
+  border-radius: var(--rdw-radius);
+}
+
+.rdw-overlay[data-zone="floating"] {
+  background: transparent;
+  border-style: dashed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rdw-divider,
+  .rdw-control {
+    transition: none;
+  }
+}
